@@ -28,10 +28,18 @@ CONSTRUCT {
   # JSON file with subjects
   BIND (IRI(CONCAT("x-sparql-anything:location=./collection/artworks/", ?filepath )) AS ?artworkMetadata ) .
   SERVICE ?artworkMetadata { 
-	  ?s xyz:id ?subjectId ; xyz:name ?subjectName . 
-	  OPTIONAL {
-	  	?s xyz:children [ ?li [ xyz:id ?childId ] ]
+	  {
+		  [] xyz:subjects [ 
+		   	xyz:id ?subjectId ; xyz:name ?subjectName ; # 1
+		   		xyz:children [ ?li [ xyz:id ?childId ] ] ]
+	  } UNION {
+		  [] xyz:children [ ?li2 ?s ] .
+		  ?s xyz:id ?subjectId ; xyz:name ?subjectName .
+		  OPTIONAL {
+		  	?s xyz:children [ ?li [ xyz:id ?childId ] ]
+		  }
 	  }
+	  
   } .
   BIND (IRI(CONCAT(STR(tsub:), STR(?subjectId) )) AS ?subject) .
   BIND (IRI(CONCAT(STR(tsub:), STR(?childId) )) AS ?child) .

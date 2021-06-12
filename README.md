@@ -82,3 +82,19 @@ tsub:15852  a          skos:Concept ;
 		...
 ```
 
+## Generate a CSV list of subjects
+```
+fx -q queries/subjects-list.sparql -f CSV -o subjects.csv
+```
+
+## Generate a CSV list of the subjects hierarchy
+```
+fx -q queries/subjects-hierarchy.sparql -f CSV -o hierarchy.csv
+```
+
+## Generate a CSV of artworks + related subjects
+```
+fx -q queries/arts-and-subjects-list.sparql -f CSV -o arts-and-subjects-list.csv
+```
+
+

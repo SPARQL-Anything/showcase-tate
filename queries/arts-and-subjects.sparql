@@ -27,6 +27,8 @@ CONSTRUCT {
   ) AS ?filepath ) .
   # JSON file with subjects
   BIND (IRI(CONCAT("x-sparql-anything:location=./collection/artworks/", ?filepath )) AS ?artworkMetadata ) .
-  SERVICE ?artworkMetadata { [ xyz:id ?subjectId ; xyz:name ?subjectName ] } .
+  SERVICE ?artworkMetadata { 
+		  [] xyz:children [ ?li2 [ xyz:id ?subjectId ] ].
+	  } .
   BIND (IRI(CONCAT(STR(tsub:), STR(?subjectId) )) AS ?subject) .
 }
