@@ -10,7 +10,7 @@ CONSTRUCT {
   	rdfs:label ?name;
 	schema:gender ?gender;
 	schema:birthDate ?yearOfBirth;
-	schema:deathDate ?yearOfBirth;
+	schema:deathDate ?yearOfDeath;
 	schema:birthPlace ?placeOfBirth;
 	schema:deathPlace ?placeOfDeath;
 	schema:url ?url .
