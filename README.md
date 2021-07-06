@@ -97,4 +97,12 @@ fx -q queries/subjects-hierarchy.sparql -f CSV -o hierarchy.csv
 fx -q queries/arts-and-subjects-list.sparql -f CSV -o arts-and-subjects-list.csv
 ```
 
-
+## Subjects artworks count
+Generate a table associating subjectId and artworkId
+```
+fx -q queries/subjects-artworks-id.sparql -o subjects-artworks-id.csv -f CSV -l arts-and-subjects.ttl
+```
+Reading the table and counting the number of artworks for each subject
+```
+fx -q queries/subjects-artworks-count.sparql -o subjects-artworks-count.csv -f CSV
+```

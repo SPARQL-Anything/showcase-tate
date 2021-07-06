@@ -5,13 +5,15 @@ PREFIX fx:   <http://sparql.xyz/facade-x/ns/>
 PREFIX xyz:  <http://sparql.xyz/facade-x/data/>
 PREFIX tate: <http://sparql.xyz/example/tate/>
 PREFIX tsub: <http://sparql.xyz/example/tate/subject/>
+PREFIX tart: <http://sparql.xyz/example/tate/artwork/>
 PREFIX dct: <http://purl.org/dc/terms/>
 
-SELECT ?subjectId ?subjectName (COUNT(?artwork) as ?count)
+SELECT ?subjectId (COUNT(?artworkId) as ?count)
 WHERE {
-	?artwork dct:subject ?subject .
-	?subject rdfs:label ?subjectName .
-	BIND(SUBSTR(str(?subject),STRLEN(STR(tsub:))) as ?subjectId)
-} 
-GROUP BY ?subjectId ?subjectName
+	SERVICE <x-sparql-anything:location=./subjects-artworks-id.csv,csv.headers=true> {
+		[] xyz:subjectId ?subjectId ; xyz:artworkId ?artworkId .
+	}
+}
+GROUP BY ?subjectId
 ORDER BY DESC(?count)
+#LIMIT 10
