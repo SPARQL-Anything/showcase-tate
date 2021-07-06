@@ -7,7 +7,7 @@ PREFIX schema: <http://schema.org/>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?id ?title ?thumbnail ?filepath (GROUP_CONCAT(DISTINCT ?subjectId) as ?subjects)
+SELECT ?id ?title ?thumbnail ?filepath (COUNT(DISTINCT ?subjectId) as ?subjects) (GROUP_CONCAT(DISTINCT ?subjectId) as ?subjects)
 WHERE {
   # List of artworks
   SERVICE <x-sparql-anything:csv.headers=true,location=./collection/artwork_data.csv> {
