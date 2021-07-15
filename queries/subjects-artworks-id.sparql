@@ -11,6 +11,6 @@ PREFIX dct: <http://purl.org/dc/terms/>
 SELECT ?subjectId ?artworkId
 WHERE {
 	?artwork dct:subject ?subject .
-	BIND(SUBSTR(str(?artwork),STRLEN(STR(tart:)) +1 ) as ?artworkId)
-	BIND(SUBSTR(str(?subject),STRLEN(STR(tsub:)) +1 ) as ?subjectId)
+	BIND(SUBSTR(str(?artwork),STRLEN(STR(tart:)) + 1 ) as ?artworkId)
+	BIND(SUBSTR(str(?subject),STRLEN(STR(tsub:)) + 1 ) as ?subjectId)
 }
