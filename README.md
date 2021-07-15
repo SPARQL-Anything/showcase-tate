@@ -106,3 +106,8 @@ Reading the table and counting the number of artworks for each subject
 ```
 fx -q queries/subjects-artworks-count.sparql -o subjects-artworks-count.csv -f CSV
 ```
+
+## Generate CSV of artworks + subjects + link to images
+```
+fx -q queries/subjects-artworks-images.sparql -o subjects-artworks-images.csv -f CSV -l arts-and-subjects.ttl 
+```
