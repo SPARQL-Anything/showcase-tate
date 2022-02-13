@@ -6,7 +6,6 @@ PREFIX xyz:  <http://sparql.xyz/facade-x/data/>
 PREFIX tate: <http://sparql.xyz/example/tate/>
 PREFIX tsub: <http://sparql.xyz/example/tate/subject/>
 
-
 CONSTRUCT {
 	?scheme a skos:ConceptScheme .
 	?subject a skos:Concept ;
@@ -16,17 +15,18 @@ CONSTRUCT {
 		.
 	?child skos:broader ?subject .
 } WHERE {
-  # List of artworks
+  # Browse the list of artworks, get info for locating JSON
   SERVICE <x-sparql-anything:csv.headers=true,location=./collection/artwork_data.csv> {
     [] xyz:id ?id ; xyz:accession_number ?accId .
   }
-  
+  # Build location of JSON file with subjects, from previous SERVICE
   BIND ( IF ( STRSTARTS( ?accId, "AR" ) , 
     LCASE(CONCAT( "ar/", SUBSTR( ?accId ,3 ,3), "/", ?accId, "-", ?id , ".json" )),
     LCASE(CONCAT( SUBSTR( ?accId ,1 , 1), "/", SUBSTR( ?accId ,2 , 3), "/" , ?accId, "-", ?id , ".json" ))
   ) AS ?filepath ) .
-  # JSON file with subjects
-  BIND (IRI(CONCAT("x-sparql-anything:location=./collection/artworks/", ?filepath )) AS ?artworkMetadata ) .
+  # Build location of JSON file with subjects
+  BIND (IRI(CONCAT("x-sparql-anything:location=./collection/artworks/", ?filepath )) 
+       AS ?artworkMetadata ) .	  
   SERVICE ?artworkMetadata { 
 	  {
 		  [] xyz:subjects [ 
@@ -39,9 +39,8 @@ CONSTRUCT {
 		  	?s xyz:children [ ?li [ xyz:id ?childId ] ]
 		  }
 	  }
-	  
   } .
-  BIND (IRI(CONCAT(STR(tsub:), STR(?subjectId) )) AS ?subject) .
-  BIND (IRI(CONCAT(STR(tsub:), STR(?childId) )) AS ?child) .
-  BIND (IRI(CONCAT(STR(tsub:), "subjects" )) AS ?scheme) .
+  BIND (fx:entity( tsub:, ?subjectId ) AS ?subject) .
+  BIND (fx:entity( tsub:, ?childId   ) AS ?child) .
+  BIND (fx:entity( tsub:, "subjects" ) AS ?scheme) .
 }

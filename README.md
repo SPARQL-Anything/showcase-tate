@@ -111,3 +111,8 @@ fx -q queries/subjects-artworks-count.sparql -o subjects-artworks-count.csv -f C
 ```
 fx -q queries/subjects-artworks-images.sparql -o subjects-artworks-images.csv -f CSV -l arts-and-subjects.ttl 
 ```
+
+## Generate CSV of id + materials
+```
+fx -q queries/materials.sparql -o materials.csv -f CSV
+```
