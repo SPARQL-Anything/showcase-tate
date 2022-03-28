@@ -115,4 +115,8 @@ fx -q queries/subjects-artworks-images.sparql -o subjects-artworks-images.csv -f
 ## Generate CSV of id + materials
 ```
 fx -q queries/materials.sparql -o materials.csv -f CSV
+
+## Generate CSV of id + time
+```
+fx -q queries/time.sparql -o time.csv -f CSV
 ```
