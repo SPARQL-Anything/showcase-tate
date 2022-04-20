@@ -1,16 +1,22 @@
-# SPARQL Anything: open data from the Tate Gallery
+# SPARQL Anything showcase: open data from the Tate Gallery
 
-This project includes examples using open data from the Tate Gallery collection.
+This showcase provides examples of using SPARQL Anything to query [open data from the Tate Gallery collection](https://github.com/tategallery/collection).
+The repository is included as Git submodule in folder `collection`.
 
-In what follows, `fx` is `java -jar sparql-anything-<version>.jar`.
+In what follows, `fx` is a placeholder for `java -jar sparql-anything-<version>.jar`.
+See the SPARQL Anything [usage documentation](https://sparql-anything.readthedocs.io/en/latest/#usage) for details on Java options such as enabling logging.
 
 
-## Extract artists
+## Artists as Schema.org
+The query generates a Schema.org description of artists from the CSV file.
+
 ```
 fx -q queries/artists.sparql -f TTL -o artists.ttl
 ```
+
 Output excerpt from `artists.ttl`:
-```
+
+```turtle
 @prefix schema: <http://schema.org/> .
 @prefix fx:    <http://sparql.xyz/facade-x/ns/> .
 @prefix dct:   <http://purl.org/dc/terms/> .
