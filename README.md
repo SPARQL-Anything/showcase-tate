@@ -9,7 +9,8 @@ See the SPARQL Anything [usage documentation](https://sparql-anything.readthedoc
 
 ## Artists as Schema.org
 
-- Description: The query generates a Schema.org description of artists from the CSV file.
+The query generates a Schema.org description of artists from the CSV file.
+
 - Query: [queries/artists.sparql](queries/artists.sparql)
 - Input: [collection/artist_data.csv](collection/artist_data.csv)
 - Output: [artists.ttl](artists.ttl)
