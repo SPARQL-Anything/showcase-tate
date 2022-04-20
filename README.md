@@ -11,11 +11,17 @@ See the SPARQL Anything [usage documentation](https://sparql-anything.readthedoc
 
 The query generates a Schema.org description of artists from the CSV file.
 
-- Query: [queries/artists.sparql](queries/artists.sparql)
-- Input: [collection/artist_data.csv](collection/artist_data.csv)
-- Output: [artists.ttl](artists.ttl)
-- Formats: CSV
-- Shows: Basic mappings with `SPARQL CONSTRUCT` 
+```yaml
+Query: [queries/artists.sparql](queries/artists.sparql)
+Competency: Novice 
+Input: [collection/artist_data.csv](collection/artist_data.csv)
+Output: [artists.ttl](artists.ttl)
+Query type: CONSTRUCT
+Options:
+ - csv.headers
+Formats:
+ - CSV
+```
 
 Usage:
 
