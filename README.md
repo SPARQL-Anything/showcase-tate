@@ -8,18 +8,17 @@ See the SPARQL Anything [usage documentation](https://sparql-anything.readthedoc
 
 
 ## Artists as Schema.org
-
 The query generates a Schema.org description of artists from the CSV file.
 
-- Query: [queries/artists.sparql](queries/artists.sparql)
-- Competency: Novice 
-- Input: [collection/artist_data.csv](collection/artist_data.csv)
-- Output: [artists.ttl](artists.ttl)
-- Query type: CONSTRUCT
-- Options:
-  - csv.headers
-- Formats:
-  - CSV
+|  | Extract artworks and subjects |
+|:----------|:-------------|
+| __Query__ | [queries/artists.sparql](queries/artists.sparql) |
+| __Input__ | [collection/artist_data.csv](collection/artist_data.csv) |
+| __Output__ | [artists.ttl](artists.ttl) |
+| __Type__ | CONSTRUCT |
+| __Options__ | csv.headers=true |
+| __Formats__ | CSV
+| __Level__ | Novice 
 
 
 Usage:
@@ -61,15 +60,45 @@ tate:artist-10241  a       schema:Person ;
 ```
 
 ## Extract artworks and subjects
+This query combines two `x-sparql-anything` transformation. The first, iterates over the CSV file `artworks_data.csv`. For each one of the artworks, the Tate Gallery open data includes a JSON file with some more details, including a list of annotated subjects. The query finds the related JSON and queries it to retrieve the subjects. The output is projected in a KG of artworks and subjects, via a `CONSTRUCT` query.
+
+| Title | Extract artworks and subjects |
+|:----------|:-------------|
+| __Query__ | [queries/arts-and-subjects.sparql](queries/arts-and-subjects.sparql)
+| __Input__ | [collection/artworks_data.csv](collection/artworks_data.csv), [collection/artworks/](collection/artworks/)
+| __Output__ | [arts-and-subjects.ttl](arts-and-subjects.ttl) |
+| __Type__ | CONSTRUCT |
+| __Options__ | csv.headers=true |
+| __Formats__ | CSV, JSON
+| __Level__ | Novice
+
+Run the example as follows:
+
 ```
 fx -q queries/arts-and-subjects.sparql -f TTL -o arts-and-subjects.ttl
 ```
 
+
 ## Build a SKOS taxonomy of subjects
+This example explores all the JSON files of the open data collection and generates a unified SKOS taxonomy of all artwork subject annotations of the Tate Gallery open dataset.
+
+
+| Title | Build a SKOS taxonomy of subjects |
+|:----------|:-------------|
+| __Query__ | [queries/subjects-as-skos.sparql](queries/subjects-as-skos.sparql)
+| __Input__ | [collection/artworks_data.csv](collection/artworks_data.csv), [collection/artworks/](collection/artworks/)
+| __Output__ | [subjects.ttl](subjects.ttl) |
+| __Type__ | CONSTRUCT |
+| __Options__ | csv.headers=true |
+| __Formats__ | CSV, JSON
+| __Level__ | Novice
+
+Run the query as follows:
 
 ```
 fx -q queries/subjects-as-skos.sparql -f TTL -o subjects.ttl
 ```
+
 Output (excerpt, see `subjects.ttl`):
 ```
 @prefix fx:    <http://sparql.xyz/facade-x/ns/> .
@@ -103,26 +132,97 @@ tsub:15852  a          skos:Concept ;
 ```
 
 ## Generate a CSV list of subjects
+This example extracts all subjects from the JSON files in `collections/artworks/` and return a distinct set of subjects as CSV.
+
+| Title | Generate a CSV list of subjects |
+|:----------|:-------------|
+| __Query__ | [queries/subjects-list.sparql](queries/subjects-list.sparql)
+| __Input__ | [collection/artworks_data.csv](collection/artworks_data.csv), [collection/artworks/](collection/artworks/)
+| __Output__ | [subjects.csv](subjects.csv) |
+| __Type__ | SELECT |
+| __Options__ | csv.headers=true |
+| __Formats__ | CSV, JSON
+| __Level__ | Novice
+
+Run the query as follows:
+
 ```
 fx -q queries/subjects-list.sparql -f CSV -o subjects.csv
 ```
 
 ## Generate a CSV list of the subjects hierarchy
+This example extracts all subjects from the JSON files in `collections/artworks/` and return the whole hierarchy as CSV table.
+
+| Title | Generate a CSV list of the subjects hierarchy |
+|:----------|:-------------|
+| __Query__ | [queries/subjects-hierarchy.sparql](queries/subjects-hierarchy.sparql)
+| __Input__ | [collection/artworks_data.csv](collection/artworks_data.csv), [collection/artworks/](collection/artworks/)
+| __Output__ | [subjects.csv](hierarchy.csv) |
+| __Type__ | SELECT |
+| __Options__ | csv.headers=true |
+| __Formats__ | CSV, JSON
+| __Level__ | Novice
+
+Run the query as follows:
+
 ```
 fx -q queries/subjects-hierarchy.sparql -f CSV -o hierarchy.csv
 ```
 
 ## Generate a CSV of artworks + related subjects
+This query combines two `x-sparql-anything` transformation. The first, iterates over the CSV file `artworks_data.csv`. For each one of the artworks, the Tate Gallery open data includes a JSON file with some more details, including a list of annotated subjects. The query finds the related JSON and queries it to retrieve the subjects. The output is projected in a KG of artworks and subjects, via a `CONSTRUCT` query.
+
+| Title | Generate a CSV of artworks + related subjects |
+|:----------|:-------------|
+| __Query__ | [queries/arts-and-subjects-list.sparql](queries/arts-and-subjects-list.sparql)
+| __Input__ | [collection/artworks_data.csv](collection/artworks_data.csv), [collection/artworks/](collection/artworks/)
+| __Output__ | [arts-and-subjects-list.csv](arts-and-subjects-list.csv) |
+| __Type__ | SELECT |
+| __Options__ | csv.headers=true |
+| __Formats__ | CSV, JSON
+| __Level__ | Novice
+
+Run the example as follows:
+
 ```
 fx -q queries/arts-and-subjects-list.sparql -f CSV -o arts-and-subjects-list.csv
 ```
 
-## Subjects artworks count
-Generate a table associating subjectId and artworkId
+## Count artworks for each subjects
+This example is a process divided in two steps.
+
+**Step 1:** Generate a table associating subjectId and artworkId. The table is produced by querying an RDF file of artworks and subjects. I this example, the input is an RDF and the output is CSV!
+
+| Title | Count artworks for each subjects (Part 1) |
+|:----------|:-------------|
+| __Query__ | [queries/subjects-artworks-id.sparql](queries/subjects-artworks-id.sparql)
+| __Input__ | [arts-and-subjects.ttl](arts-and-subjects.ttl)
+| __Output__ | [subjects-artworks-id.csv](subjects-artworks-id.csv) |
+| __Type__ | SELECT |
+| __Options__ |  |
+| __Formats__ | - |
+| __Level__ | Novice
+
+Run the example as follows:
+
 ```
 fx -q queries/subjects-artworks-id.sparql -o subjects-artworks-id.csv -f CSV -l arts-and-subjects.ttl
 ```
-Reading the table and counting the number of artworks for each subject
+
+**Step 2:** Reading the CSV table and counting the number of artworks for each subject
+
+| Title | Count artworks for each subjects (Part 2) |
+|:----------|:-------------|
+| __Query__ | [queries/subjects-artworks-count.sparql](queries/subjects-artworks-count.sparql)
+| __Input__ | [subjects-artworks-id.csv](subjects-artworks-id.csv)
+| __Output__ | [subjects-artworks-count.csv](subjects-artworks-count.csv) |
+| __Type__ | SELECT |
+| __Options__ |  |
+| __Formats__ | - |
+| __Level__ | Novice
+
+Run the example as follows:
+
 ```
 fx -q queries/subjects-artworks-count.sparql -o subjects-artworks-count.csv -f CSV
 ```
