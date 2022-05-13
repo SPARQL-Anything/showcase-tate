@@ -227,16 +227,26 @@ Run the example as follows:
 fx -q queries/subjects-artworks-count.sparql -o subjects-artworks-count.csv -f CSV
 ```
 
-## Generate CSV of artworks + subjects + link to images
+## Other queries
+
+### Generate CSV of artworks + subjects + link to images
+This example shows how to generate a CSV file including artworks, subjects, and link to thumbnail images by querying the `arts-and-subjects.ttl` file.
+
+Run the example as follows:
+
 ```
 fx -q queries/subjects-artworks-images.sparql -o subjects-artworks-images.csv -f CSV -l arts-and-subjects.ttl 
 ```
 
-## Generate CSV of id + materials
-```
-fx -q queries/materials.sparql -o materials.csv -f CSV
+### Generate CSV of id + materials
+Mediums information from artwork's JSON files, aggregated into a CSV.
 
-## Generate CSV of id + time
+```
+fx -q queries/classification-medium.sparql -o materials.csv -f CSV
+
+### Generate CSV of id + time
+Time information from the CSV to another CSV.
+
 ```
 fx -q queries/time.sparql -o time.csv -f CSV
 ```
