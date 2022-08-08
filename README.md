@@ -250,3 +250,14 @@ Time information from the CSV to another CSV.
 ```
 fx -q queries/time.sparql -o time.csv -f CSV
 ```
+
+### List of genres
+Information is distributed in the artworks' JSON files.
+```
+fx -q queries/genres.sparql -o genres.csv -f CSV
+```
+### List of decades
+Information is distributed in the artworks' JSON files.
+```
+fx -q queries/decades.sparql -o decades.csv -f CSV
+```
