@@ -26,6 +26,7 @@ CONSTRUCT {
   		xyz:placeOfDeath ?placeOfDeath;   
 		xyz:url ?url
   }
+  # BIND ( fx:entity (tate:, "artist-", ?id ) as ?artist ) .
   BIND (IRI(CONCAT(STR(tate:), "artist-", ?id )) AS ?artist) .
 }
 
